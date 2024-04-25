@@ -16,7 +16,9 @@ import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/system";
 import Paper from "@mui/material/Paper";
+import AdbIcon from '@mui/icons-material/Adb';
 import { createTheme } from "@mui/material";
+import { useState } from "react";
 const theme = createTheme();
 const StyledMenu = styled((props) => (
   <Menu
@@ -42,8 +44,12 @@ const StyledMenu = styled((props) => (
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(true); 
 
+  const handleImageLoadError = () => {
+    setImageLoaded(false); 
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -77,7 +83,7 @@ const Header = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            <AdbIcon sx={{ width: 56, height: 56 }}/>
           </Typography>
           <Button color="inherit">
             <Link to="/home" style={{ textDecoration: "none", color: "white" }}>
@@ -130,11 +136,12 @@ const Header = () => {
                 color="inherit"
               >
                 {/* <AccountCircle/> */}
-                <Avatar
+              { imageLoaded ? <Avatar
                   alt={auth?.user?.name}
                   src={`https://webskitters-student.onrender.com/${auth?.user?.image}`}
                   sx={{ width: 56, height: 56 }}
-                />
+                  onError={handleImageLoadError}
+                />:<AccountCircle sx={{ width: 56, height: 56 }}/>}
               </IconButton>
               <StyledMenu
                 id="menu-appbar"

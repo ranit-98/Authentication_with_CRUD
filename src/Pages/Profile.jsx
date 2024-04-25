@@ -8,43 +8,64 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import { useState } from "react";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
-  marginTop:"2rem",
+  marginTop: "2rem",
   color: theme.palette.text.secondary,
 }));
 
 const Profile = () => {
   const [auth, setAuth] = useAuth();
+  const [imageLoaded, setImageLoaded] = useState(true);
+
+  const handleImageLoadError = () => {
+    setImageLoaded(false);
+  };
   return (
     <>
       <Layout>
         <Container>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Item style={{height:"18rem"}}>
-              <img
-                alt={auth?.user?.name}
-                src={`https://webskitters-student.onrender.com/${auth?.user?.image}`}
-                sx={{ width: 56, height: 56 }}
-                style={{ marginTop: "2rem",borderRadius:"50%" }}
-              />
-            </Item>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Item>
+                {imageLoaded ? (
+                  <img
+                    alt={auth?.user?.name}
+                    src={`https://webskitters-student.onrender.com/${auth?.user?.image}`}
+                    sx={{ width: 56, height: 56 }}
+                    style={{ marginTop: "2rem", borderRadius: "50%" }}
+                    onError={handleImageLoadError}
+                  />
+                ) : (
+                  <img
+                    alt={auth?.user?.name}
+                    src="img/profilepic.png"
+                    //sx={{ width: 56, height: 56 }}
+                    style={{
+                      marginTop: "2rem",
+                      borderRadius: "50%",
+                      height: "20rem",
+                    }}
+                  />
+                )}
+              </Item>
+            </Grid>
+            <Grid item xs={8}>
+              <Item>
+                {/* <pre>{JSON.stringify(auth?.user, null, 4)}</pre> */}
+                <h1>{auth?.user?.name}</h1>
+                <h1>Email: {auth?.user?.email}</h1>
+                <h1>Phone: {auth?.user?.mobile}</h1>
+                <h1>First School: {auth?.user?.first_school}</h1>
+                <h1>ID: {auth?.user?._id}</h1>
+              </Item>
+            </Grid>
           </Grid>
-          <Grid item xs={8}>
-            <Item>
-              {/* <pre>{JSON.stringify(auth?.user, null, 4)}</pre> */}
-              <h1>{auth?.user?.name}</h1>
-              <h1>Email: {auth?.user?.email}</h1>
-              <h1>Phone: {auth?.user?.mobile}</h1>
-              <h1>First School: {auth?.user?.first_school}</h1>
-              <h1>ID: {auth?.user?._id}</h1>
-            </Item>
-          </Grid>
-        </Grid>
         </Container>
       </Layout>
     </>

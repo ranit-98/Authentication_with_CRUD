@@ -153,7 +153,7 @@ const defaultTheme = createTheme();
                   required
                   fullWidth
                   name="image"
-                  type="file"
+                  type="file" 
                   id="image"
                   onChange={handleImageChange}
                   accept="image/*"

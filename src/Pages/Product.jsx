@@ -41,6 +41,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Product = () => {
   const [auth, setAuth] = useAuth();
   const [products, setProducts] = useState();
+  const [imageLoaded, setImageLoaded] = useState(true); 
+
+  const handleImageLoadError = () => {
+    setImageLoaded(false); 
+  };
   //console.log(auth.token);
   const getProduct = async () => {
     try {
@@ -103,19 +108,26 @@ const Product = () => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{row?.price}</StyledTableCell>
                   <StyledTableCell align="right">
-                    {row?.image ? (
+                    {/* {imageLoaded ? (
                       <img
                         src={row?.image}
                         style={{ height: "10rem", width: "15rem" }}
                         alt="image"
+                        onError={handleImageLoadError}
                       />
                     ) : (
                       <img
-                        src="img/altimg.jpg"
+                        src="img/ile.webp"
                         style={{ height: "10rem" }}
                         alt="image"
                       />
-                    )}
+                    )} */}
+                    <img
+                        src={row?.image}
+                        style={{ height: "10rem", width: "15rem" }}
+                        alt="image"
+                        
+                      />
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <Link

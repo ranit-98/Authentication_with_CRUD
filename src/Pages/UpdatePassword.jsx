@@ -45,7 +45,7 @@ const UpdatePassword = () => {
 
     try {
       const res = await axios.post(
-        "https://webskitters-student.onrender.com/forget-password",
+        "https://webskitters-student.onrender.com/update-password",
         loginData,
         {
           headers: {

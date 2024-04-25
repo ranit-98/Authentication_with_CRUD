@@ -18,7 +18,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const defaultTheme = createTheme();
 
 const EditProducts=()=> {
-  const { id } = useParams();
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -28,6 +27,7 @@ const EditProducts=()=> {
   });
   const [auth] = useAuth();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -87,7 +87,7 @@ const EditProducts=()=> {
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "x-access-token": auth?.token,
-          "Content-Type": "multipart/form-data",
+          
         },
       });
       navigate("/product");
@@ -186,7 +186,7 @@ const EditProducts=()=> {
                   onChange={handleImageChange}
                   accept="image/*"
                 />
-                {product.image && product.image instanceof File && (
+                {product.image   && product.image instanceof File &&(
                   <img
                     style={{ height: "180px" }}
                     src={URL.createObjectURL(product?.image)}
